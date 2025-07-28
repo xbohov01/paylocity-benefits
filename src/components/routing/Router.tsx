@@ -8,6 +8,14 @@ import { useAuth } from "../context/auth/useAuth";
 import { useMemo } from "react";
 import MyBenefits from "../me/MyBenefits";
 import MySettings from "../me/MySettings";
+import { UserList } from "../manage/UserList";
+
+// using routing for simplicity
+// could be done as a SPA with tabs and such
+
+// also as is this will log the user out on refresh
+// could be fixed by storing a refresh token and refreshing the session on reload
+// also might want to store last location into localstorage and send the user there after refresh
 
 export default function Router() {
   const { user } = useAuth();
@@ -66,7 +74,7 @@ export default function Router() {
               children: [
                 {
                   index: true,
-                  element: <>List</>,
+                  element: <UserList/>,
                 },
                 {
                   path: "user/:userId/calculations",
@@ -76,6 +84,11 @@ export default function Router() {
                   path: "user/:userId/settings",
                   element: <>user settings</>,
                 },
+                {
+                  path: "user/create",
+                  element: <>user create</>,
+                },
+                // Leaving this one unused because of time constraits but could be used to see a cost breakdown per calculation
                 {
                   path: "user/:userId/calculations/detail/:calculationId",
                   element: <>calculation</>,
