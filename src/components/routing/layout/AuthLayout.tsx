@@ -17,6 +17,7 @@ export function AuthLayout() {
         backgroundColor="gray.900"
         borderRadius="8px"
         margin="8px"
+        padding="8px"
       >
         <HStack
           id="header"

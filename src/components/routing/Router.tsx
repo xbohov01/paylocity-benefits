@@ -6,6 +6,8 @@ import Login from "../login/Login";
 import { DefaultLayout } from "./layout/DefaultLayout";
 import { useAuth } from "../context/auth/useAuth";
 import { useMemo } from "react";
+import MyBenefits from "../me/MyBenefits";
+import MySettings from "../me/MySettings";
 
 export default function Router() {
   const { user } = useAuth();
@@ -40,15 +42,16 @@ export default function Router() {
               children: [
                 {
                   index: true,
-                  element: <>List</>,
+                  element: <MyBenefits/>,
                 },
+                // Leaving this one unused because of time constraits but could be used to see a cost breakdown per calculation
                 {
                   path: "detail/:calculationId",
                   element: <>calculation</>,
                 },
                 {
                   path: "settings",
-                  element: <>settings</>,
+                  element: <MySettings/>,
                 },
               ],
             },

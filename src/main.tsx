@@ -6,6 +6,11 @@ import { Provider } from "@/components/ui/provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Router from "./components/routing/Router";
 import { AuthContextProvider } from "./components/context/auth/AuthContext";
+import { mockBenefitSettings, mockBenefitsList } from "./mock/benefitsData";
+
+//Mock data
+mockBenefitsList();
+mockBenefitSettings();
 
 const queryClient = new QueryClient();
 
