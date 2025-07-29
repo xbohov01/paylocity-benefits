@@ -5,12 +5,12 @@ import {
   Input,
   Heading,
   VStack,
-  Alert,
   Field,
   Text,
 } from "@chakra-ui/react";
 import { useAuth } from "../context/auth/useAuth";
 import { useNavigate } from "react-router-dom";
+import AlertBox from "../alert/AlertBox";
 
 type LoginFormInputs = {
   username: string;
@@ -69,13 +69,7 @@ export default function Login() {
           </Field.Root>
 
           {loginError && (
-            <Alert.Root status="error">
-              <Alert.Indicator />
-              <Alert.Content>
-                <Alert.Title>Login failed</Alert.Title>
-                <Alert.Description>{loginError}</Alert.Description>
-              </Alert.Content>
-            </Alert.Root>
+            <AlertBox status="error" title="Login Failed" message={loginError}/>
           )}
 
           <Button

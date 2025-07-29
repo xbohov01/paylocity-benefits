@@ -10,6 +10,8 @@ import MyBenefits from "../me/MyBenefits";
 import MySettings  from "../me/MySettings";
 import UserList from "../manage/UserList";
 import CreateUser from "../manage/CreateUser";
+import UserBenefits from "../manage/UserBenefits";
+import EditUser from "../manage/EditUser";
 
 // using routing for simplicity
 // could be done as a SPA with tabs and such
@@ -79,13 +81,13 @@ export default function Router() {
                 },
                 {
                   path: "user/:userId/calculations",
-                  element: <>user calculations</>,
+                  element: <UserBenefits />,
                 },
                 {
                   path: "user/:userId/settings",
-                  element: <>user settings</>,
+                  element: <EditUser/>,
                 },
-                // Makign this a separate path since I'm guessing it would be some kind of a wizard where documents and stuff are submitted
+                // Making this a separate path since I'm guessing it would be some kind of a wizard where documents and stuff are submitted
                 {
                   path: "user/create",
                   element: <CreateUser />,

@@ -86,7 +86,7 @@ export default function UserList() {
               ))}
             </Table.Body>
           </Table.Root>
-
+          {/**Chakra ui has a pretty nice pagination component that could be used */}
           <HStack justify="space-between" width="100%" pt={4}>
             <Button
               size="sm"

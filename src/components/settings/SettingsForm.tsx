@@ -1,6 +1,5 @@
 import type { BenefitsSettings } from "@/types/benefits";
 import {
-  Alert,
   Box,
   Button,
   Field,
@@ -15,6 +14,7 @@ import { useMemo } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { sendPostUserSettings } from "@/api/benefits";
 import { calculateCost } from "@/util/costCalculation";
+import AlertBox from "../alert/AlertBox";
 
 export default function SettingsForm(props: { settings: BenefitsSettings, refetch: () => void }) {
   const {
@@ -157,13 +157,7 @@ export default function SettingsForm(props: { settings: BenefitsSettings, refetc
           </Button>
 
           {settingsMutation.isError && (
-            <Alert.Root status="error">
-              <Alert.Indicator />
-              <Alert.Content>
-                <Alert.Title>Save failed</Alert.Title>
-                <Alert.Description>{settingsMutation.error.message}</Alert.Description>
-              </Alert.Content>
-            </Alert.Root>
+            <AlertBox status="error" title="Save failed" message={settingsMutation.error.message}/>
           )}
         </VStack>
       </form>

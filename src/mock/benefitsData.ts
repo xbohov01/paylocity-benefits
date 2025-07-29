@@ -14,7 +14,7 @@ export const mockBenefitSettings = () => {
   if (!existing) {
     const data: BenefitsSettings[] = [
       {
-        userId: 1,
+        userId: 0,
         firstName: "John",
         lastName: "Doe1",
         dependents: [
@@ -25,7 +25,7 @@ export const mockBenefitSettings = () => {
         ],
       },
       {
-        userId: 2,
+        userId: 1,
         firstName: "John",
         lastName: "Doe2",
         dependents: [
@@ -48,8 +48,8 @@ export const mockBenefitSettings = () => {
 // Assumption is that these would be "bonus" paychecks so maybe different rules would apply, which would be handled by the backend
 const generateBenefitsList = (): BenefitSearchResult[] => {
   const users = [
-    { userId: 1, dependents: 1 },
-    { userId: 2, dependents: 2 },
+    { userId: 0, dependents: 1 },
+    { userId: 1, dependents: 2 },
   ];
 
   const totalPaychecks = 26;

@@ -2,7 +2,6 @@ import { sendPostUser } from "@/api/users";
 import type { Dependent } from "@/types/benefits";
 import { calculateCost } from "@/util/costCalculation";
 import {
-  Alert,
   Button,
   Field,
   Heading,
@@ -17,6 +16,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import AlertBox from "../alert/AlertBox";
 
 // Would likely have more fields depending on what backend requires
 type CreateUserInputs = {
@@ -168,15 +168,7 @@ export default function CreateUser() {
             </Button>
 
             {createMutation.isError && (
-              <Alert.Root status="error">
-                <Alert.Indicator />
-                <Alert.Content>
-                  <Alert.Title>User creation failed</Alert.Title>
-                  <Alert.Description>
-                    {createMutation.error.message}
-                  </Alert.Description>
-                </Alert.Content>
-              </Alert.Root>
+              <AlertBox status="error" title="User creation failed" message={createMutation.error.message}/>
             )}
           </VStack>
         </form>

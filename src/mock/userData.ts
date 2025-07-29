@@ -6,14 +6,14 @@ export const mockUsers = () => {
   if (!existing) {
     const data: User[] = [
       {
-        id: 1,
+        id: 0,
         username: "admin",
         firstName: "John",
         lastName: "Doe1",
         functions: ["ViewUsers"],
       },
       {
-        id: 2,
+        id: 1,
         username: "user",
         firstName: "John",
         lastName: "Doe2",
