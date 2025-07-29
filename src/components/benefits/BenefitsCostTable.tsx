@@ -68,7 +68,7 @@ export default function BenefitsCostTable(props: BenefitsCostTableProps) {
       {isError && (
         <AlertBox
           status="error"
-          title="Failed to fetch"
+          title="Error"
           message={error.message}
         />
       )}

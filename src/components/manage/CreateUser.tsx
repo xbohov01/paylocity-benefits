@@ -3,7 +3,6 @@ import type { Dependent } from "@/types/benefits";
 import { calculateCost } from "@/util/costCalculation";
 import {
   Button,
-  Field,
   Heading,
   HStack,
   Input,
@@ -17,6 +16,7 @@ import { useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import AlertBox from "../alert/AlertBox";
+import SimpleField from "../field/SimpleField";
 
 // Would likely have more fields depending on what backend requires
 type CreateUserInputs = {
@@ -73,31 +73,31 @@ export default function CreateUser() {
       <Box width="100%">
         <form onSubmit={handleSubmit(onSubmit)}>
           <VStack gap={3} align="stretch" width="100%">
-            <Field.Root invalid={!!errors.firstName}>
-              <Field.Label>
-                <Field.RequiredIndicator />
-                First name
-              </Field.Label>
+            <SimpleField
+              invalid={!!errors.firstName}
+              required
+              error={errors.firstName?.message}
+              label="First Name"
+            >
               <Input
                 placeholder="First Name"
                 {...register("firstName", { required: true })}
                 bgColor="gray.900"
               />
-              <Field.ErrorText>{errors.firstName?.message}</Field.ErrorText>
-            </Field.Root>
+            </SimpleField>
 
-            <Field.Root invalid={!!errors.lastName}>
-              <Field.Label>
-                <Field.RequiredIndicator />
-                Last name
-              </Field.Label>
+            <SimpleField
+              invalid={!!errors.lastName}
+              required
+              error={errors.lastName?.message}
+              label="Last Name"
+            >
               <Input
                 placeholder="Last Name"
                 {...register("lastName", { required: true })}
                 bgColor="gray.900"
               />
-              <Field.ErrorText>{errors.lastName?.message}</Field.ErrorText>
-            </Field.Root>
+            </SimpleField>
 
             <Heading size="sm" mt={4}>
               Dependents
@@ -105,11 +105,12 @@ export default function CreateUser() {
 
             {fields.map((field, index) => (
               <HStack key={field.id} align="start">
-                <Field.Root invalid={!!errors.dependents?.[index]?.firstName}>
-                  <Field.Label>
-                    <Field.RequiredIndicator />
-                    Last name
-                  </Field.Label>
+                <SimpleField
+                  invalid={!!errors.dependents?.[index]?.firstName}
+                  required
+                  error={"Field is required"}
+                  label="First Name"
+                >
                   <Input
                     placeholder="First Name"
                     {...register(`dependents.${index}.firstName` as const, {
@@ -117,13 +118,13 @@ export default function CreateUser() {
                     })}
                     bgColor="gray.900"
                   />
-                  <Field.ErrorText>{"Field is required"}</Field.ErrorText>
-                </Field.Root>
-                <Field.Root invalid={!!errors.dependents?.[index]?.lastName}>
-                  <Field.Label>
-                    <Field.RequiredIndicator />
-                    Last name
-                  </Field.Label>
+                </SimpleField>
+                <SimpleField
+                  invalid={!!errors.dependents?.[index]?.lastName}
+                  required
+                  error={"Field is required"}
+                  label="Last Name"
+                >
                   <Input
                     placeholder="Last Name"
                     {...register(`dependents.${index}.lastName` as const, {
@@ -131,8 +132,7 @@ export default function CreateUser() {
                     })}
                     bgColor="gray.900"
                   />
-                  <Field.ErrorText>{"Field is required"}</Field.ErrorText>
-                </Field.Root>
+                </SimpleField>
 
                 <Button
                   type="button"
@@ -168,7 +168,11 @@ export default function CreateUser() {
             </Button>
 
             {createMutation.isError && (
-              <AlertBox status="error" title="User creation failed" message={createMutation.error.message}/>
+              <AlertBox
+                status="error"
+                title="User creation failed"
+                message={createMutation.error.message}
+              />
             )}
           </VStack>
         </form>

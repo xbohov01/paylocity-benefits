@@ -5,7 +5,7 @@ import "./index.css";
 import { Provider } from "@/components/ui/provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Router from "./components/routing/Router";
-import { AuthContextProvider } from "./components/context/auth/AuthContext";
+import AuthContextProvider from "./components/context/auth/AuthContextProvider";
 import { mockBenefitSettings, mockBenefitsList } from "./mock/benefitsData";
 import { mockUsers } from "./mock/userData";
 

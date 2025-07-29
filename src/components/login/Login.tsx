@@ -5,12 +5,12 @@ import {
   Input,
   Heading,
   VStack,
-  Field,
   Text,
 } from "@chakra-ui/react";
 import { useAuth } from "../context/auth/useAuth";
 import { useNavigate } from "react-router-dom";
 import AlertBox from "../alert/AlertBox";
+import SimpleField from "../field/SimpleField";
 
 type LoginFormInputs = {
   username: string;
@@ -43,33 +43,37 @@ export default function Login() {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <VStack gap={2}>
-          <Field.Root invalid={!!errors.username}>
-            <Field.Label>
-              <Field.RequiredIndicator />
-              Username
-            </Field.Label>
+          <SimpleField
+            invalid={!!errors.username}
+            required
+            error={errors.username?.message}
+            label="Username"
+          >
             <Input
               type="text"
               placeholder="Enter your username"
               {...register("username", { required: "Username is required" })}
             />
-            <Field.ErrorText>{errors.username?.message}</Field.ErrorText>
-          </Field.Root>
-          <Field.Root invalid={!!errors.password}>
-            <Field.Label>
-              <Field.RequiredIndicator />
-              Username
-            </Field.Label>
+          </SimpleField>
+          <SimpleField
+            invalid={!!errors.password}
+            required
+            error={errors.password?.message}
+            label="Password"
+          >
             <Input
               type="password"
               placeholder="Enter your password"
               {...register("password", { required: "Password is required" })}
             />
-            <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
-          </Field.Root>
+          </SimpleField>
 
           {loginError && (
-            <AlertBox status="error" title="Login Failed" message={loginError}/>
+            <AlertBox
+              status="error"
+              title="Login Failed"
+              message={loginError}
+            />
           )}
 
           <Button

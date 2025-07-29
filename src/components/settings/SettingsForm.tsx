@@ -2,7 +2,6 @@ import type { BenefitsSettings } from "@/types/benefits";
 import {
   Box,
   Button,
-  Field,
   Heading,
   HStack,
   Input,
@@ -15,8 +14,12 @@ import { useMutation } from "@tanstack/react-query";
 import { sendPostUserSettings } from "@/api/benefits";
 import { calculateCost } from "@/util/costCalculation";
 import AlertBox from "../alert/AlertBox";
+import SimpleField from "../field/SimpleField";
 
-export default function SettingsForm(props: { settings: BenefitsSettings, refetch: () => void }) {
+export default function SettingsForm(props: {
+  settings: BenefitsSettings;
+  refetch: () => void;
+}) {
   const {
     control,
     register,
@@ -48,11 +51,11 @@ export default function SettingsForm(props: { settings: BenefitsSettings, refetc
   const values = watch();
 
   const onSubmit = async (values: BenefitsSettings) => {
-    await settingsMutation.mutateAsync(values)
+    await settingsMutation.mutateAsync(values);
   };
 
   const estimatedCost = useMemo(() => {
-    return calculateCost(values.firstName, values.lastName, values.dependents)
+    return calculateCost(values.firstName, values.lastName, values.dependents);
   }, [values]);
 
   return (
@@ -63,33 +66,32 @@ export default function SettingsForm(props: { settings: BenefitsSettings, refetc
       <form onSubmit={handleSubmit(onSubmit)}>
         <VStack gap={3} align="stretch">
           {/* Maybe don't let users change their name freely */}
-          <Field.Root invalid={!!errors.firstName}>
-            <Field.Label>
-              <Field.RequiredIndicator />
-              First name
-            </Field.Label>
+
+          <SimpleField
+            invalid={!!errors.firstName}
+            required
+            error={errors.firstName?.message}
+            label="First Name"
+          >
             <Input
               placeholder="First Name"
               {...register("firstName", { required: true })}
-              defaultValue={props.settings.firstName}
               bgColor="gray.900"
             />
-            <Field.ErrorText>{errors.firstName?.message}</Field.ErrorText>
-          </Field.Root>
+          </SimpleField>
 
-          <Field.Root invalid={!!errors.lastName}>
-            <Field.Label>
-              <Field.RequiredIndicator />
-              Last name
-            </Field.Label>
+          <SimpleField
+            invalid={!!errors.lastName}
+            required
+            error={errors.lastName?.message}
+            label="Last Name"
+          >
             <Input
               placeholder="Last Name"
               {...register("lastName", { required: true })}
-              defaultValue={props.settings.lastName}
               bgColor="gray.900"
             />
-            <Field.ErrorText>{errors.lastName?.message}</Field.ErrorText>
-          </Field.Root>
+          </SimpleField>
 
           <Heading size="sm" mt={4}>
             Dependents
@@ -97,36 +99,34 @@ export default function SettingsForm(props: { settings: BenefitsSettings, refetc
 
           {fields.map((field, index) => (
             <HStack key={field.id} align="start">
-              <Field.Root invalid={!!errors.dependents?.[index]?.firstName}>
-                <Field.Label>
-                  <Field.RequiredIndicator />
-                  Last name
-                </Field.Label>
+              <SimpleField
+                invalid={!!errors.dependents?.[index]?.firstName}
+                required
+                error={"Field is required"}
+                label="First Name"
+              >
                 <Input
                   placeholder="First Name"
                   {...register(`dependents.${index}.firstName` as const, {
                     required: true,
                   })}
-                  defaultValue={field.firstName}
                   bgColor="gray.900"
                 />
-                <Field.ErrorText>{"Field is required"}</Field.ErrorText>
-              </Field.Root>
-              <Field.Root invalid={!!errors.dependents?.[index]?.lastName}>
-                <Field.Label>
-                  <Field.RequiredIndicator />
-                  Last name
-                </Field.Label>
+              </SimpleField>
+              <SimpleField
+                invalid={!!errors.dependents?.[index]?.lastName}
+                required
+                error={"Field is required"}
+                label="Last Name"
+              >
                 <Input
                   placeholder="Last Name"
                   {...register(`dependents.${index}.lastName` as const, {
                     required: true,
                   })}
-                  defaultValue={field.lastName}
                   bgColor="gray.900"
                 />
-                <Field.ErrorText>{"Field is required"}</Field.ErrorText>
-              </Field.Root>
+              </SimpleField>
 
               <Button
                 type="button"
@@ -152,12 +152,22 @@ export default function SettingsForm(props: { settings: BenefitsSettings, refetc
             Estimated Cost Next Paycheck: ${estimatedCost.toFixed(2)}
           </Text>
 
-          <Button type="submit" bgColor="green.400" disabled={!isValid} loading={settingsMutation.isPending}>
+          {/**Maybe disable submit unless changes were made */}
+          <Button
+            type="submit"
+            bgColor="green.400"
+            disabled={!isValid}
+            loading={settingsMutation.isPending}
+          >
             Save Settings
           </Button>
 
           {settingsMutation.isError && (
-            <AlertBox status="error" title="Save failed" message={settingsMutation.error.message}/>
+            <AlertBox
+              status="error"
+              title="Save failed"
+              message={settingsMutation.error.message}
+            />
           )}
         </VStack>
       </form>
