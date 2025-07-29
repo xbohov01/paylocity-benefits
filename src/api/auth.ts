@@ -10,7 +10,7 @@ export const sendLogin = async (
       if (username === "admin" && password === "admin123") {
         resolve({
           user: {
-            id: 1,
+            id: 0,
             username: "admin",
             firstName: "John",
             lastName: "Doe1",
@@ -22,7 +22,7 @@ export const sendLogin = async (
       } else if (username === "user" && password === "user123") {
         resolve({
           user: {
-            id: 2,
+            id: 1,
             username: "user",
             firstName: "John",
             lastName: "Doe2",

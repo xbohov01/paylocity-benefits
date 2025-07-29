@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run --coverage",
-    "test-ui": "vitest --ui --coverage"
+    "test-ui": "vitest --ui --coverage",
+    "clean": "rimraf node_modules dist coverage build package-lock.json yarn.lock pnpm-lock.yaml"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.23.0",
@@ -38,6 +39,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
     "jsdom": "^26.1.0",
+    "rimraf": "^6.0.1",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
     "vite": "^7.0.4",

@@ -32,7 +32,7 @@ export const sendPostUserSettings = async (settings: BenefitsSettings) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       // Get current data from localStorage
-      const raw = localStorage.getItem("benefitsSettings");
+      const raw = localStorage.getItem("mockBenefitsSettings");
       const currentSettings: BenefitsSettings[] = raw ? JSON.parse(raw) : [];
 
       // Replace the entry with the same userId or append if not found
@@ -45,7 +45,7 @@ export const sendPostUserSettings = async (settings: BenefitsSettings) => {
         : [...currentSettings, settings];
 
       // Save back to localStorage
-      localStorage.setItem("benefitsSettings", JSON.stringify(updatedSettings));
+      localStorage.setItem("mockBenefitsSettings", JSON.stringify(updatedSettings));
 
       resolve(true);
     }, 1000);

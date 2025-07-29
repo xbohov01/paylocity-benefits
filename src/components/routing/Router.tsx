@@ -7,7 +7,7 @@ import DefaultLayout from "./layout/DefaultLayout";
 import { useAuth } from "../context/auth/useAuth";
 import { useMemo } from "react";
 import MyBenefits from "../me/MyBenefits";
-import MySettings  from "../me/MySettings";
+import MySettings from "../me/MySettings";
 import UserList from "../manage/UserList";
 import CreateUser from "../manage/CreateUser";
 import UserBenefits from "../manage/UserBenefits";
@@ -23,12 +23,12 @@ import EditUser from "../manage/EditUser";
 export default function Router() {
   const { user } = useAuth();
 
-  const userHasFunction = (functionName: string) => {
-    if (user == null) return false;
-    return functionName == "" || user.functions.includes(functionName);
-  };
-
   const router = useMemo(() => {
+    const userHasFunction = (functionName: string) => {
+      if (user == null) return false;
+      return functionName == "" || user.functions.includes(functionName);
+    };
+
     const routes: RouteObject[] = [
       {
         path: "/",
@@ -85,7 +85,7 @@ export default function Router() {
                 },
                 {
                   path: "user/:userId/settings",
-                  element: <EditUser/>,
+                  element: <EditUser />,
                 },
                 // Making this a separate path since I'm guessing it would be some kind of a wizard where documents and stuff are submitted
                 {
