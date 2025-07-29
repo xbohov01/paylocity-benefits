@@ -1,14 +1,15 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import type { RouteObject } from "react-router-dom";
-import { HomeRedirect } from "./HomeRedirect";
-import { AuthLayout } from "./layout/AuthLayout";
+import HomeRedirect from "./HomeRedirect";
+import AuthLayout from "./layout/AuthLayout";
 import Login from "../login/Login";
-import { DefaultLayout } from "./layout/DefaultLayout";
+import DefaultLayout from "./layout/DefaultLayout";
 import { useAuth } from "../context/auth/useAuth";
 import { useMemo } from "react";
 import MyBenefits from "../me/MyBenefits";
-import MySettings from "../me/MySettings";
-import { UserList } from "../manage/UserList";
+import MySettings  from "../me/MySettings";
+import UserList from "../manage/UserList";
+import CreateUser from "../manage/CreateUser";
 
 // using routing for simplicity
 // could be done as a SPA with tabs and such
@@ -50,7 +51,7 @@ export default function Router() {
               children: [
                 {
                   index: true,
-                  element: <MyBenefits/>,
+                  element: <MyBenefits />,
                 },
                 // Leaving this one unused because of time constraits but could be used to see a cost breakdown per calculation
                 {
@@ -59,7 +60,7 @@ export default function Router() {
                 },
                 {
                   path: "settings",
-                  element: <MySettings/>,
+                  element: <MySettings />,
                 },
               ],
             },
@@ -74,7 +75,7 @@ export default function Router() {
               children: [
                 {
                   index: true,
-                  element: <UserList/>,
+                  element: <UserList />,
                 },
                 {
                   path: "user/:userId/calculations",
@@ -84,9 +85,10 @@ export default function Router() {
                   path: "user/:userId/settings",
                   element: <>user settings</>,
                 },
+                // Makign this a separate path since I'm guessing it would be some kind of a wizard where documents and stuff are submitted
                 {
                   path: "user/create",
-                  element: <>user create</>,
+                  element: <CreateUser />,
                 },
                 // Leaving this one unused because of time constraits but could be used to see a cost breakdown per calculation
                 {

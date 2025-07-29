@@ -1,7 +1,7 @@
 import { Heading, HStack, VStack } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 
-export function AuthLayout() {
+export default function AuthLayout() {
   return (
     <VStack
       id="vert-stack"

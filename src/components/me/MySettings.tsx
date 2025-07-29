@@ -1,4 +1,4 @@
-import { HStack, Spinner, VStack } from "@chakra-ui/react";
+import { Heading, Spinner, VStack } from "@chakra-ui/react";
 import { useAuth } from "../context/auth/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { sendGetUserSettings } from "@/api/benefits";
@@ -22,10 +22,12 @@ export default function MySettings() {
       padding="8px"
       marginTop="8px"
     >
-      <HStack width="100%">
+      <VStack width="100%">
+        <Heading size="md">Edit settings</Heading>
         {isLoading && <Spinner />}
         {data != undefined && <SettingsForm settings={data} refetch={refetch}/>}
-      </HStack>
+        {/** Also maybe some error display */}
+      </VStack>
     </VStack>
   );
 }

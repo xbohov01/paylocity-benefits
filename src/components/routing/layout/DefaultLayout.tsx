@@ -2,7 +2,7 @@ import { useAuth } from "@/components/context/auth/useAuth";
 import { Button, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-export function DefaultLayout() {
+export default function DefaultLayout() {
   const { user, logout } = useAuth();
 
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ export function DefaultLayout() {
         borderRadius="8px"
         margin="8px"
         padding="8px"
+        height="90vh"
       >
         <HStack
           id="header"
@@ -56,13 +57,35 @@ export function DefaultLayout() {
           divideX="2px"
         >
           {user?.functions.includes("ViewUsers") && (
-            <Button backgroundColor="gray.200" onClick={() => navigate("/manage")}>Manage Users</Button>       
+            <Button
+              backgroundColor="gray.200"
+              onClick={() => navigate("/manage")}
+            >
+              Manage Users
+            </Button>
           )}
-          <Button backgroundColor="gray.200" onClick={() => navigate("/me")}>My Benefits</Button>   
-          <Button backgroundColor="gray.200" onClick={() => navigate("/me/settings")}>My Settings</Button>   
+          <Button backgroundColor="gray.200" onClick={() => navigate("/me")}>
+            My Benefits
+          </Button>
+          <Button
+            backgroundColor="gray.200"
+            onClick={() => navigate("/me/settings")}
+          >
+            My Settings
+          </Button>
         </HStack>
         <Outlet />
       </VStack>
+      <HStack
+        backgroundColor="gray.900"
+        borderRadius="8px"
+        padding="8px"
+        maxWidth="1400px"
+        minWidth="800px"
+        width="60vw"
+      >
+        Some footer information
+      </HStack>
     </VStack>
   );
 }

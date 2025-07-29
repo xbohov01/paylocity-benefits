@@ -1,4 +1,5 @@
 import type { User } from "@/types/auth";
+import type { Dependent } from "@/types/benefits";
 
 export const sendGetUsers = async (
   page: number = 1,
@@ -19,18 +20,28 @@ export const sendGetUsers = async (
   });
 };
 
-export const sendPostUser = async (user: User): Promise<void> => {
+// a bit janky since it's mocked
+// needs to create a user entry and also benefit settings
+// not making it possible to log in as the new user - that's a backend problem
+export const sendPostUser = async (inputs: {
+  firstName: string;
+  lastName: string;
+  dependents: Dependent[];
+}): Promise<void> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const raw = localStorage.getItem("mockUsers");
       const users: User[] = raw ? JSON.parse(raw) : [];
 
-      const existingIndex = users.findIndex((u) => u.id === user.id);
-      if (existingIndex >= 0) {
-        users[existingIndex] = user; // Update
-      } else {
-        users.push(user); // Insert
-      }
+      const id = users.length; // hacky way to get the next id since lenght will always be +1
+
+      users.push({
+        id: id,
+        username: `${inputs.firstName}.${inputs.lastName}`,
+        firstName: inputs.firstName,
+        lastName: inputs.lastName,
+        functions: []
+      });
 
       localStorage.setItem("mockUsers", JSON.stringify(users));
       resolve();

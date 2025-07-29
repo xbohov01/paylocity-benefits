@@ -7,16 +7,20 @@ import {
   Portal,
   Select,
   Spinner,
+  StackSeparator,
   Table,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-export function UserList() {
+export default function UserList() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+
+  const navigate = useNavigate();
 
   const { data, isLoading } = useQuery({
     queryKey: ["users", page, pageSize],
@@ -26,7 +30,11 @@ export function UserList() {
   const totalPages = data != undefined ? Math.ceil(data.total / pageSize) : 0;
 
   const sizes = createListCollection({
-    items: [{ value: 5, label: "5" },{ value: 10, label: "10" },{ value: 20, label: "20" }],
+    items: [
+      { value: 5, label: "5" },
+      { value: 10, label: "10" },
+      { value: 20, label: "20" },
+    ],
   });
 
   return (
@@ -38,15 +46,13 @@ export function UserList() {
       padding="8px"
       marginTop="8px"
     >
-      <HStack width="100%">
+      <HStack width="100%" justifyContent="space-between">
         <Heading size="md">Users</Heading>
-
+        <Button size="sm" bgColor="yellow.300" onClick={() => navigate("user/create")}>Create a new user</Button>
         {/* Could add some user filtering options */}
       </HStack>
 
-      {isLoading && (
-        <Spinner/>
-      )}
+      {isLoading && <Spinner />}
       {data != undefined && data.page.length == 0 && (
         <HStack>
           <Heading size="md">No data found</Heading>
@@ -70,7 +76,12 @@ export function UserList() {
                   <Table.Cell>{user.username}</Table.Cell>
                   <Table.Cell>{user.firstName}</Table.Cell>
                   <Table.Cell>{user.lastName}</Table.Cell>
-                  <Table.Cell>actions</Table.Cell>
+                  <Table.Cell>
+                    <HStack gap="4px" separator={<StackSeparator/>}>
+                      <Link to={`user/${user.id}/settings`}>Edit</Link>
+                      <Link to={`user/${user.id}/calculations`}>Benefits</Link>
+                    </HStack>
+                  </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
@@ -99,7 +110,7 @@ export function UserList() {
                 <Select.HiddenSelect />
                 <Select.Control>
                   <Select.Trigger>
-                    <Select.ValueText placeholder={`${pageSize}`}/>
+                    <Select.ValueText placeholder={`${pageSize}`} />
                   </Select.Trigger>
                   <Select.IndicatorGroup>
                     <Select.Indicator />

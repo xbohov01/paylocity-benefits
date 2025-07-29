@@ -44,6 +44,8 @@ export const mockBenefitSettings = () => {
   }
 };
 
+// So this generates 3 paychecks for some months since there are 2 extra paychecks included in the assignment but not addressing it since it's mock data
+// Assumption is that these would be "bonus" paychecks so maybe different rules would apply, which would be handled by the backend
 const generateBenefitsList = (): BenefitSearchResult[] => {
   const users = [
     { userId: 1, dependents: 1 },

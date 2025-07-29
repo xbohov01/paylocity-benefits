@@ -14,6 +14,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { useMemo } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { sendPostUserSettings } from "@/api/benefits";
+import { calculateCost } from "@/util/costCalculation";
 
 export default function SettingsForm(props: { settings: BenefitsSettings, refetch: () => void }) {
   const {
@@ -51,30 +52,11 @@ export default function SettingsForm(props: { settings: BenefitsSettings, refetc
   };
 
   const estimatedCost = useMemo(() => {
-    const base = 1000 / 26;
-    const perDependent = 500 / 26;
-
-    let result = 0;
-
-    if (values.firstName.startsWith("A") || values.lastName.startsWith("A")) {
-      result += base - base / 10;
-    } else {
-      result += base;
-    }
-
-    values.dependents.map((d) => {
-      if (d.firstName.startsWith("A") || d.lastName.startsWith("A")) {
-        result += perDependent - perDependent / 10;
-      } else {
-        result += perDependent;
-      }
-    });
-
-    return result;
+    return calculateCost(values.firstName, values.lastName, values.dependents)
   }, [values]);
 
   return (
-    <Box width="100%" p={4} borderWidth={1} borderRadius="8px">
+    <Box width="100%" p={4} borderRadius="8px">
       <Heading size="md" mb={4}>
         Benefits Settings
       </Heading>
